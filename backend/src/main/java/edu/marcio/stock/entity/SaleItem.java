@@ -31,7 +31,7 @@ public class SaleItem {
 
     @Column(nullable = false, name = "quantity_sold")
     @Positive(message = "the quantity must be bigger than zero")
-    private Long quantitySold; // Stored in units or grams
+    private Long quantitySold; // Stored in units or milligrams
 
     @Column(nullable = false, name = "sold_at_price")
     private BigDecimal soldAtPrice; // THE SNAPSHOT PRICE

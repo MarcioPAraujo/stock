@@ -1,5 +1,6 @@
 package edu.marcio.stock.entity;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import edu.marcio.stock.enums.SaleStatus;
@@ -35,7 +36,7 @@ public class Sale {
 
     @Column(nullable = false, name = "total_price")
     @Positive(message = "The value should be greater than zero")
-    private Double totalPrice;
+    private BigDecimal totalPrice;
 
     @Column(nullable = false, name = "created_at")
     private LocalDateTime createdAt;

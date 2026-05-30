@@ -48,7 +48,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleInternalErrorServer(Exception e) {
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(new ErrorResponse(500, "internal error server", "an unexpected error occured",
+                .body(new ErrorResponse(500, "internal error server", "an unexpected error occurred",
                         LocalDateTime.now()));
     }
 }
