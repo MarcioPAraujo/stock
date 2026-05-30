@@ -30,7 +30,7 @@ public class SaleItem {
     private Product product; // Kept for reporting/analytics
 
     @Column(nullable = false, name = "quantity_sold")
-    @Positive(message = "the qauntity must be bigger than zero")
+    @Positive(message = "the quantity must be bigger than zero")
     private Long quantitySold; // Stored in units or grams
 
     @Column(nullable = false, name = "sold_at_price")
