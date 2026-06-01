@@ -2,6 +2,7 @@ package edu.marcio.stock.entity;
 
 import java.time.LocalDateTime;
 
+import edu.marcio.stock.enums.StockMovimentType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -17,10 +18,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Table(name = "stock_moviment")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "stock_moviment")
 public class StockMovement {
 
     @Id
@@ -31,7 +32,7 @@ public class StockMovement {
     private Long quantity;
 
     @Column(nullable = false)
-    private StockMovement moviment;
+    private StockMovimentType moviment;
 
     @Column(nullable = false, name = "created_at")
     private LocalDateTime createdAt;
