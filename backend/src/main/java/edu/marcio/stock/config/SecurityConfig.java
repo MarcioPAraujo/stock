@@ -47,7 +47,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/test").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/refresh").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/register").hasRole(UserRoles.MANAGER.toString())
+                        .requestMatchers(HttpMethod.POST, "/register").permitAll()
                         // allow h2
                         .requestMatchers("/h2-console/**").permitAll()
                         .anyRequest().authenticated());

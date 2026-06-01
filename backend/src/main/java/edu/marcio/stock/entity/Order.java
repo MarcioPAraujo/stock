@@ -60,6 +60,6 @@ public class Order {
     private Supplier supplier;
 
     @ManyToMany
-    @JoinTable(name = "order_porducts", joinColumns = @JoinColumn(nullable = false, name = "order_id"), inverseJoinColumns = @JoinColumn(nullable = false, name = "product_id"))
+    @JoinTable(name = "order_products", joinColumns = @JoinColumn(nullable = false, name = "order_id"), inverseJoinColumns = @JoinColumn(nullable = false, name = "product_id"))
     private List<Product> products = new ArrayList<>();
 }
