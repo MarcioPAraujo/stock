@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,6 +26,11 @@ public class SectorCotroller {
     @PostMapping
     public ResponseEntity<Sector> createSector(@Valid @RequestBody SectorRequest body) {
         return ResponseEntity.status(HttpStatus.CREATED).body(sectorService.registerSector(body));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Sector> updateSectorName(@PathVariable String id, @RequestBody SectorRequest body) {
+        return ResponseEntity.status(HttpStatus.OK).body(sectorService.editSectorName(body, id));
     }
 
 }

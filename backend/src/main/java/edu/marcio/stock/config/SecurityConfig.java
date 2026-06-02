@@ -19,6 +19,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import edu.marcio.stock.enums.UserRoles;
 import edu.marcio.stock.filters.JwtFilter;
 import edu.marcio.stock.service.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
@@ -45,7 +46,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/auth/refresh").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/users").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/v1/sector").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/sector/**")
+                        .hasAllAuthorities(UserRoles.MANAGER.toString())
                         // allow h2
                         .requestMatchers("/h2-console/**").permitAll()
                         .anyRequest().authenticated());
