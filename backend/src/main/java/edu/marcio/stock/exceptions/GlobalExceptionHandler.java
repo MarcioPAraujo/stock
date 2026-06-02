@@ -73,15 +73,15 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(UsernameNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleUsernameNotFound(UsernameNotFoundException e) {
         return ResponseEntity
-                .status(HttpStatus.UNAUTHORIZED)
-                .body(new ErrorResponse(401, "unauthorized", "invalid email or password", LocalDateTime.now()));
+                .status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorResponse(400, "bad request", "invalid email or password", LocalDateTime.now()));
     }
 
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<ErrorResponse> handleBadCredentials(BadCredentialsException e) {
         return ResponseEntity
-                .status(HttpStatus.UNAUTHORIZED)
-                .body(new ErrorResponse(401, "unauthorized", "invalid email or password", LocalDateTime.now()));
+                .status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorResponse(400, "bad request", "invalid email or password", LocalDateTime.now()));
     }
 
     @ExceptionHandler(LockedException.class)
