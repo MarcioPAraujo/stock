@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @RestController
-@RequestMapping("/test")
+@RequestMapping("/api/test")
 public class Test {
 
     @GetMapping

@@ -1,5 +1,6 @@
 package edu.marcio.stock.service;
 
+import java.util.HashMap;
 import java.util.Optional;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import edu.marcio.stock.dto.user.UserRequest;
 import edu.marcio.stock.entity.Sector;
 import edu.marcio.stock.entity.UserEntity;
+import edu.marcio.stock.enums.UserRoles;
 import edu.marcio.stock.exceptions.ResourceNotFoundException;
 import edu.marcio.stock.exceptions.UserAlreadyExistsException;
 import edu.marcio.stock.repository.SectorRepository;
@@ -37,10 +39,17 @@ public class UserService {
             throw new ResourceNotFoundException("the provided sector does not exists!");
         }
 
+        HashMap<String, UserRoles> roleMap = new HashMap<>();
+        roleMap.put("MANAGER", UserRoles.MANAGER);
+        roleMap.put("DOC_WORKER", UserRoles.DOC_WORKER);
+        roleMap.put("LEADER", UserRoles.LEADER);
+
+        UserRoles role = roleMap.get(userRequest.getRole());
+
         UserEntity userEntity = new UserEntity();
         userEntity.setName(userRequest.getName());
         userEntity.setEmail(userRequest.getEmail());
-        userEntity.setRole(userRequest.getRole());
+        userEntity.setRole(role);
         userEntity.setPassword(passwordEncoder.encode(userRequest.getPassword()));
         userEntity.setSector(optionalSector.get());
 
