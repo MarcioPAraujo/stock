@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 public class UserRequest {
     @NotBlank(message = "the name of the user should be filled")
-    private String nome;
+    private String name;
 
     @NotBlank(message = "the email should be filled")
     @Pattern(regexp = "^[a-zA-Z0-9._]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "invalid email")

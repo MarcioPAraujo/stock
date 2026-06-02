@@ -46,7 +46,7 @@ public class UserEntity implements UserDetails {
     private UserRoles role;
 
     @OneToOne
-    @JoinColumn(name = "sector_id")
+    @JoinColumn(name = "sector_id", referencedColumnName = "id", nullable = false)
     private Sector sector;
 
     @Override
