@@ -1,5 +1,6 @@
 package edu.marcio.stock.entity;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,9 +14,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -35,18 +37,17 @@ public class Product {
     private String sku;
 
     @Column(nullable = false)
-    @NotBlank(message = "the EAN of the product must be provided")
     private String ean;
 
     @Column(nullable = false)
-    @NotBlank(message = "the name of the product must be provided")
     private String name;
 
-    @Column
-    private String brand;
+    @ManyToOne
+    @JoinColumn(name = "brand_id", nullable = false)
+    private ProductBrand brand;
 
     @Column(nullable = false)
-    private double price;
+    private BigDecimal price;
 
     @Column(nullable = false, name = "measure_type")
     private ProductMeasure measureType;

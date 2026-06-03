@@ -46,7 +46,9 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/auth/refresh").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/users").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/v1/sector/**")
+                        .requestMatchers(HttpMethod.POST, "/api/v1/sectors")
+                        .hasAllAuthorities(UserRoles.MANAGER.toString())
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/sectors/**")
                         .hasAllAuthorities(UserRoles.MANAGER.toString())
                         // allow h2
                         .requestMatchers("/h2-console/**").permitAll()

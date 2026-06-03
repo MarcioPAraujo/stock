@@ -2,13 +2,18 @@ package edu.marcio.stock.service;
 
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import edu.marcio.stock.dto.sector.SectorListingParamsRequest;
 import edu.marcio.stock.dto.sector.SectorRequest;
 import edu.marcio.stock.entity.Sector;
 import edu.marcio.stock.exceptions.ResourceAlreadyRegisteredException;
 import edu.marcio.stock.exceptions.ResourceNotFoundException;
 import edu.marcio.stock.repository.SectorRepository;
+import edu.marcio.stock.specification.SectorSpecification;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -52,6 +57,12 @@ public class SectorService {
         sector.setName(request.getName());
 
         return sectorRepository.save(sector);
+    }
+
+    public Page<Sector> getSectorPage(Pageable pageable, SectorListingParamsRequest params) {
+        Specification<Sector> sectorSpecification = Specification.where(SectorSpecification.hasName(params.getName()));
+
+        return sectorRepository.findAll(sectorSpecification, pageable);
     }
 
 }
