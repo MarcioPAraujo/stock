@@ -4,7 +4,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.marcio.stock.dto.sector.SectorListingParamsRequest;
+import edu.marcio.stock.dto.sector.SectorProductsListingParamsRequest;
 import edu.marcio.stock.dto.sector.SectorRequest;
+import edu.marcio.stock.entity.Product;
 import edu.marcio.stock.entity.Sector;
 import edu.marcio.stock.service.SectorService;
 import jakarta.validation.Valid;
@@ -44,6 +46,14 @@ public class SectorCotroller {
         Page<Sector> sectorPage = sectorService.getSectorPage(pageable, params);
 
         return ResponseEntity.status(HttpStatus.OK).body(sectorPage);
+    }
+
+    @GetMapping("/{id}/products")
+    public ResponseEntity<Page<Product>> getSectorProducts(@PathVariable String id, Pageable pageable,
+            @ModelAttribute SectorProductsListingParamsRequest params) {
+        Page<Product> sectorProductsPage = sectorService.getSectorProductsPage(id, pageable, params);
+
+        return ResponseEntity.status(HttpStatus.OK).body(sectorProductsPage);
     }
 
 }

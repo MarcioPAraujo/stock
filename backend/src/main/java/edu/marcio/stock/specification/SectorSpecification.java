@@ -13,4 +13,5 @@ public class SectorSpecification {
             return criteriaBuilder.like(criteriaBuilder.lower(root.get("name")), "%" + name.toLowerCase() + "%");
         };
     }
+
 }

@@ -52,7 +52,7 @@ public class Product {
     @Column(nullable = false, name = "measure_type")
     private ProductMeasure measureType;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "is_active")
     private boolean isActive;
 
     @PrePersist
@@ -63,4 +63,16 @@ public class Product {
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "products_sector", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "sector_id"))
     private List<Sector> sectors = new ArrayList<>();
+
+    private String generateSKU() {
+        String part1 = this.name.substring(0, 2);
+        String part2 = this.brand.getName().substring(0, 2);
+        String part3 = this.measureType.toString().substring(0, 1);
+        StringBuffer stringBuffer = new StringBuffer("");
+
+        for (int i = 65; i < 91; i++) {
+            stringBuffer.append(Character.toChars(i));
+        }
+        return part1 + "-" + part2 + "-" + part3 + "-" + stringBuffer.toString();
+    }
 }

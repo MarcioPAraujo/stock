@@ -6,12 +6,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import edu.marcio.stock.dto.sector.SectorListingParamsRequest;
+import edu.marcio.stock.dto.sector.SectorProductsListingParamsRequest;
 import edu.marcio.stock.dto.sector.SectorRequest;
+import edu.marcio.stock.entity.Product;
 import edu.marcio.stock.entity.Sector;
 import edu.marcio.stock.exceptions.ResourceAlreadyRegisteredException;
 import edu.marcio.stock.exceptions.ResourceNotFoundException;
+import edu.marcio.stock.repository.ProductRepository;
 import edu.marcio.stock.repository.SectorRepository;
 import edu.marcio.stock.specification.SectorSpecification;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +24,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SectorService {
     private final SectorRepository sectorRepository;
+    private final ProductRepository productRepository;
 
-    public void isSectorAlreadyRegistered(String name) {
+    private void isSectorAlreadyRegistered(String name) {
         Optional<Sector> optionalSector = sectorRepository.findByName(name);
 
         if (optionalSector.isPresent()) {
@@ -63,6 +68,24 @@ public class SectorService {
         Specification<Sector> sectorSpecification = Specification.where(SectorSpecification.hasName(params.getName()));
 
         return sectorRepository.findAll(sectorSpecification, pageable);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<Product> getSectorProductsPage(
+            String id,
+            Pageable pageable,
+            SectorProductsListingParamsRequest params) {
+
+        Page<Product> productPage = productRepository.findAllProductsBySectorIdWithFilters(
+                pageable,
+                id,
+                params.getProductName(),
+                params.getSku(),
+                params.getEan(),
+                params.getBrand(),
+                params.isActive());
+
+        return productPage;
     }
 
 }
