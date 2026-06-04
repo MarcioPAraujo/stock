@@ -43,7 +43,14 @@ public class GlobalExceptionHandler {
                 .body(new ErrorResponse(400, "bad request", e.getMessage(), LocalDateTime.now()));
     }
 
-    // validation excption
+    @ExceptionHandler(StringToEnumParseException.class)
+    public ResponseEntity<ErrorResponse> handleStringToEnumParseException(StringToEnumParseException e) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorResponse(400, "bad request", e.getMessage(), LocalDateTime.now()));
+    }
+
+    // validation exception
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, Object>> handleValidationException(MethodArgumentNotValidException e) {
         Map<String, Object> response = new HashMap<>();

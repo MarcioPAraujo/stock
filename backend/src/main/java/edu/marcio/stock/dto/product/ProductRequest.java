@@ -1,7 +1,11 @@
 package edu.marcio.stock.dto.product;
 
 import java.math.BigDecimal;
+import java.util.List;
 
+import org.hibernate.validator.constraints.Length;
+
+import edu.marcio.stock.enums.ProductMeasure;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
@@ -14,6 +18,7 @@ public class ProductRequest {
     private String name;
 
     @NotBlank(message = "The EAN code should be informed")
+    @Length(max = 13, min = 13, message = "The EAN should have 13 numbers")
     private String ean;
 
     @NotBlank(message = "The brand should be informed")
@@ -23,7 +28,9 @@ public class ProductRequest {
     @Positive(message = "The price should be bigger than zero")
     private BigDecimal price;
 
-    @NotBlank(message = "The measure type should be informed")
     @Pattern(regexp = "UNIT|MILLIGRAMS", message = "The measure type should be UNIT or MILLIGRAMS")
-    private String measureType;
+    private ProductMeasure measureType;
+
+    @NotBlank(message = "The product should be related toa sector")
+    private List<String> sectorsId;
 }

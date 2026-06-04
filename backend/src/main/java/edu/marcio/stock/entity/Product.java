@@ -15,7 +15,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -36,7 +35,7 @@ public class Product {
     @Column(nullable = false, unique = true)
     private String sku;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String ean;
 
     @Column(nullable = false)
@@ -58,6 +57,7 @@ public class Product {
     @PrePersist
     public void setActive() {
         this.isActive = true;
+        this.sku = generateSKU();
     }
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -68,11 +68,14 @@ public class Product {
         String part1 = this.name.substring(0, 2);
         String part2 = this.brand.getName().substring(0, 2);
         String part3 = this.measureType.toString().substring(0, 1);
-        StringBuffer stringBuffer = new StringBuffer("");
+        StringBuilder stringBuilder = new StringBuilder("");
 
-        for (int i = 65; i < 91; i++) {
-            stringBuffer.append(Character.toChars(i));
+        int letterA = 65;
+        int letterZ = 95;
+        for (int i = 0; i < 10; i++) {
+            int letterCode = (int) (Math.random() * (letterZ - letterA) + letterA);
+            stringBuilder.append(Character.toChars(letterCode));
         }
-        return part1 + "-" + part2 + "-" + part3 + "-" + stringBuffer.toString();
+        return part1 + "-" + part2 + "-" + part3 + "-" + stringBuilder.toString();
     }
 }
