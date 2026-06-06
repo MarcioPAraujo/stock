@@ -8,4 +8,5 @@ import edu.marcio.stock.entity.ProductBrand;
 @Repository
 public interface ProductBrandRepository extends JpaRepository<ProductBrand, String> {
 
+    ProductBrand findByName(String name);
 }

@@ -50,6 +50,13 @@ public class GlobalExceptionHandler {
                 .body(new ErrorResponse(400, "bad request", e.getMessage(), LocalDateTime.now()));
     }
 
+    @ExceptionHandler(DuplicatedResourcesException.class)
+    public ResponseEntity<ErrorResponse> handleDuplicatedResourcesException(DuplicatedResourcesException e) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorResponse(400, "bad request", e.getMessage(), LocalDateTime.now()));
+    }
+
     // validation exception
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, Object>> handleValidationException(MethodArgumentNotValidException e) {
