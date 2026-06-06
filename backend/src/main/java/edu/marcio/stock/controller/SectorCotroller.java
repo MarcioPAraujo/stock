@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/sectors")
+@RequestMapping("/api/v1/sector")
 public class SectorCotroller {
 
     private final SectorService sectorService;

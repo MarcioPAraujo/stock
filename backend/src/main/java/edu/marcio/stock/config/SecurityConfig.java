@@ -54,7 +54,8 @@ public class SecurityConfig {
                         // .hasAllAuthorities(UserRoles.MANAGER.toString())
                         // allow h2
                         .requestMatchers("/h2-console/**").permitAll()
-                        .anyRequest().authenticated());
+                        // change
+                        .anyRequest().permitAll());
 
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
