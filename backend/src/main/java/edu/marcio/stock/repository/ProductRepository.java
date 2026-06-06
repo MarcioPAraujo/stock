@@ -16,7 +16,8 @@ public interface ProductRepository extends JpaRepository<Product, String> {
                         "JOIN p.sectors s " +
                         "LEFT JOIN p.brand b " +
                         "WHERE s.id = :id " +
-                        "AND (:productName IS NULL OR LOWER(p.name) LIKE LOWER(CONCAT('%', :productName, '%'))) " +
+                        "AND (:productName IS NULL OR LOWER(p.name) LIKE LOWER(CONCAT('%', CAST(:productName AS String), '%'))) "
+                        +
                         "AND (:brandId IS NULL OR b.id = :brandId) " +
                         "AND (:sku IS NULL OR p.sku = :sku) " +
                         "AND (:ean IS NULL OR p.ean = :ean) " +

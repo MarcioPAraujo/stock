@@ -76,6 +76,8 @@ public class SectorService {
             Pageable pageable,
             SectorProductsListingParamsRequest params) {
 
+        System.out.println(params.getProductName());
+
         Page<Product> productPage = productRepository.findAllProductsBySectorIdWithFilters(
                 pageable,
                 id,
