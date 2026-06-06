@@ -33,7 +33,7 @@ public interface ProductRepository extends JpaRepository<Product, String> {
 
         @Query("SELECT p FROM Product p " +
                         "WHERE p.brand.id = :id " +
-                        "AND (:name IS NULL OR LOWER(p.name) LIKE LOWER(CONCAT('%', :name, '%')))")
+                        "AND (:name IS NULL OR LOWER(p.name) LIKE LOWER(CONCAT('%', CAST(:name AS String), '%')))")
         Page<Product> findByBrandIdAndName(
                         Pageable pageable,
                         @Param("id") String brandId,
