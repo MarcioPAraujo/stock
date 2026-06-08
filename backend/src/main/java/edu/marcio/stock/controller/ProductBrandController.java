@@ -20,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
@@ -36,11 +37,18 @@ public class ProductBrandController {
         return ResponseEntity.status(HttpStatus.CREATED).body(brand);
     }
 
+    @GetMapping("/list")
+    public ResponseEntity<Page<ProductBrand>> getBrandsPage(@PageableDefault(page = 0, size = 10) Pageable pageable,
+            @RequestParam(required = false) String name) {
+        Page<ProductBrand> brandPage = productBrandService.getProductPage(pageable, name);
+        return ResponseEntity.status(HttpStatus.OK).body(brandPage);
+    }
+
     @GetMapping("/{id}/products")
     public ResponseEntity<Page<Product>> getMethodName(
             @PathVariable String id,
             @RequestParam(required = false) String name,
-            @PageableDefault(sort = "name") Pageable pageable) {
+            @PageableDefault(sort = "name", size = 10, page = 0) Pageable pageable) {
 
         Page<Product> productPage = productService.getProductsFromBrand(id, name, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(productPage);

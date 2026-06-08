@@ -1,5 +1,7 @@
 package edu.marcio.stock.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import edu.marcio.stock.dto.productBrand.ProductBrandRequest;
@@ -25,5 +27,9 @@ public class ProductBrandService {
         ProductBrand productBrand = new ProductBrand();
         productBrand.setName(request.getName().toUpperCase());
         return productBrandRepository.save(productBrand);
+    }
+
+    public Page<ProductBrand> getProductPage(Pageable pageable, String name) {
+        return productBrandRepository.findBrandPage(pageable, name);
     }
 }
