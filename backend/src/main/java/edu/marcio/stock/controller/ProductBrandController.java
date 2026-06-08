@@ -54,4 +54,10 @@ public class ProductBrandController {
         return ResponseEntity.status(HttpStatus.OK).body(productPage);
     }
 
+    @PatchMapping("/{brandId}")
+    public ResponseEntity<ProductBrand> toggleBrandStatus(@PathVariable String brandId) {
+        ProductBrand brand = productBrandService.togleStatus(brandId);
+        return ResponseEntity.status(HttpStatus.OK).body(brand);
+    }
+
 }
