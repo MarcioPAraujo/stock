@@ -4,13 +4,13 @@ import org.springframework.stereotype.Service;
 
 import edu.marcio.stock.dto.supplier.SupplierRequest;
 import edu.marcio.stock.entity.Supplier;
-import edu.marcio.stock.repository.SuplierRepository;
+import edu.marcio.stock.repository.SupplierRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class SupplierService {
-    private final SuplierRepository suplierRepository;
+    private final SupplierRepository suplierRepository;
 
     public Supplier registSupplier(SupplierRequest request) {
         Supplier supplierToPersist = new Supplier();
