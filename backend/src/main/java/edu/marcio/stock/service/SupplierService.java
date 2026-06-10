@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import edu.marcio.stock.dto.supplier.SupplierRequest;
 import edu.marcio.stock.entity.Supplier;
+import edu.marcio.stock.exceptions.ResourceNotFoundException;
 import edu.marcio.stock.repository.SupplierRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -26,6 +27,17 @@ public class SupplierService {
 
     public Page<Supplier> getSupplierPage(Pageable pageable, String name) {
         return supplierRepository.findPageWithNameFilter(pageable, name);
+    }
+
+    public Supplier toggleSupplierStatus(String id) {
+        Supplier supplier = supplierRepository
+                .findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        String.format("The supplier with id %s was not found", id)));
+
+        supplier.setActive(!supplier.isActive());
+
+        return supplierRepository.save(supplier);
     }
 
 }

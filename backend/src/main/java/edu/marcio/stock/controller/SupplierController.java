@@ -17,6 +17,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
@@ -37,6 +39,12 @@ public class SupplierController {
             @RequestParam String name) {
         Page<Supplier> supplierPage = supplierService.getSupplierPage(pageable, name);
         return ResponseEntity.status(HttpStatus.OK).body(supplierPage);
+    }
+
+    @PatchMapping("/toggle-status/{id}")
+    public ResponseEntity<Supplier> toggleSupplierStatus(@PathVariable String id) {
+        Supplier supplier = supplierService.toggleSupplierStatus(id);
+        return ResponseEntity.status(HttpStatus.OK).body(supplier);
     }
 
 }
