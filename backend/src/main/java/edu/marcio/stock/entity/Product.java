@@ -57,10 +57,14 @@ public class Product {
     @Column(nullable = false, name = "is_active")
     private boolean isActive;
 
+    @Column(nullable = false)
+    private Long quantiy;
+
     @PrePersist
     public void setActive() {
         this.isActive = true;
         this.sku = generateSKU();
+        this.quantiy = 0L;
     }
 
     @ManyToMany(fetch = FetchType.LAZY)
