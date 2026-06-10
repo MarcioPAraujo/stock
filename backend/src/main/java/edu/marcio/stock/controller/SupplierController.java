@@ -9,10 +9,15 @@ import edu.marcio.stock.service.SupplierService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/api/v1/supplier")
@@ -25,6 +30,13 @@ public class SupplierController {
     public ResponseEntity<Supplier> registerNewSupplier(@Valid @RequestBody SupplierRequest bodyRequest) {
         Supplier supplier = supplierService.registSupplier(bodyRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(supplier);
+    }
+
+    @GetMapping("/list")
+    public ResponseEntity<Page<Supplier>> getSupplierPage(@PageableDefault(size = 10, page = 0) Pageable pageable,
+            @RequestParam String name) {
+        Page<Supplier> supplierPage = supplierService.getSupplierPage(pageable, name);
+        return ResponseEntity.status(HttpStatus.OK).body(supplierPage);
     }
 
 }
