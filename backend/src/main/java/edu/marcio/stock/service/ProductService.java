@@ -12,10 +12,13 @@ import edu.marcio.stock.dto.product.ProductResponse;
 import edu.marcio.stock.entity.Product;
 import edu.marcio.stock.entity.ProductBrand;
 import edu.marcio.stock.entity.Sector;
+import edu.marcio.stock.entity.Supplier;
+import edu.marcio.stock.enums.ProductMeasure;
 import edu.marcio.stock.exceptions.ResourceNotFoundException;
 import edu.marcio.stock.repository.ProductBrandRepository;
 import edu.marcio.stock.repository.ProductRepository;
 import edu.marcio.stock.repository.SectorRepository;
+import edu.marcio.stock.repository.SupplierRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -25,6 +28,18 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final SectorRepository sectorRepository;
     private final ProductBrandRepository productBrandRepository;
+    private final SupplierRepository supplierRepository;
+
+    private ProductMeasure parseStringToMeasure(String measure) {
+        if (measure == null || measure.isBlank()) {
+            return null;
+        }
+        try {
+            return ProductMeasure.valueOf(measure.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException(String.format("The value os %s is not a valid measure", measure));
+        }
+    }
 
     @Transactional
     public ProductResponse registerProduct(ProductRequest request) {
@@ -38,13 +53,18 @@ public class ProductService {
             throw new ResourceNotFoundException("One or more provided sectors were not found");
         }
 
+        Supplier requestedSupplier = supplierRepository.findById(request.getSupplierId())
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        String.format("The supplier with id %s was not found", request.getSupplierId())));
+
         Product product = new Product();
         product.setName(request.getName());
         product.setBrand(productBrand);
         product.setEan(request.getEan());
         product.setPrice(request.getPrice());
         product.setSectors(secotorsList);
-        product.setMeasureType(product.getMeasureType());
+        product.setMeasureType(parseStringToMeasure(request.getMeasureType()));
+        product.setSupplier(requestedSupplier);
 
         Product savedProduct = productRepository.save(product);
         return new ProductResponse(savedProduct);

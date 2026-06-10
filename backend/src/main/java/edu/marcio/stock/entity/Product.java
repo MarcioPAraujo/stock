@@ -7,6 +7,8 @@ import java.util.List;
 import edu.marcio.stock.enums.ProductMeasure;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -49,6 +51,7 @@ public class Product {
     private BigDecimal price;
 
     @Column(nullable = false, name = "measure_type")
+    @Enumerated(EnumType.STRING)
     private ProductMeasure measureType;
 
     @Column(nullable = false, name = "is_active")
@@ -64,10 +67,14 @@ public class Product {
     @JoinTable(name = "products_sector", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "sector_id"))
     private List<Sector> sectors = new ArrayList<>();
 
+    @ManyToOne
+    @JoinColumn(name = "supplier_id", nullable = false)
+    private Supplier supplier;
+
     private String generateSKU() {
-        String part1 = this.name.substring(0, 2);
-        String part2 = this.brand.getName().substring(0, 2);
-        String part3 = this.measureType.toString().substring(0, 1);
+        String part1 = this.name.substring(0, 3);
+        String part2 = this.brand.getName().substring(0, 3);
+        String part3 = this.measureType.toString().substring(0, 3);
         StringBuilder stringBuilder = new StringBuilder("");
 
         int letterA = 65;

@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.hibernate.validator.constraints.Length;
 
-import edu.marcio.stock.enums.ProductMeasure;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
@@ -24,13 +23,14 @@ public class ProductRequest {
     @NotBlank(message = "The brand should be informed")
     private String brandId;
 
-    @NotBlank(message = "The price should be informed")
     @Positive(message = "The price should be bigger than zero")
     private BigDecimal price;
 
     @Pattern(regexp = "UNIT|MILLIGRAMS", message = "The measure type should be UNIT or MILLIGRAMS")
-    private ProductMeasure measureType;
+    private String measureType;
 
-    @NotBlank(message = "The product should be related toa sector")
     private List<String> sectorsId;
+
+    @NotBlank(message = "the supplier is mandatory")
+    private String supplierId;
 }
