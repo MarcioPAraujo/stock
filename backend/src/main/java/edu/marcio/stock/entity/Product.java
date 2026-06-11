@@ -58,7 +58,7 @@ public class Product {
     private boolean isActive;
 
     @Column(nullable = false)
-    private Long totalStock;
+    private long totalStock;
 
     @PrePersist
     public void setActive() {

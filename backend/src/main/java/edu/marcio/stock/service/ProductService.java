@@ -73,4 +73,12 @@ public class ProductService {
     public Page<Product> getProductsFromBrand(String brandId, String productName, Pageable pageable) {
         return productRepository.findByBrandIdAndName(pageable, brandId, productName);
     }
+
+    public Page<Product> getProductsWithIsActiveAndNameFilter(
+            Pageable pageable,
+            String name,
+            Boolean isActive) {
+        Page<Product> productPage = productRepository.findPageWithNameOrIsActiveFilter(pageable, name, isActive);
+        return productPage;
+    }
 }
