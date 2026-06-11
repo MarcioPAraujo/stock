@@ -85,7 +85,7 @@ public class SectorService {
                 params.getSku(),
                 params.getEan(),
                 params.getBrand(),
-                params.isActive());
+                params.getIsActive());
 
         return productPage;
     }

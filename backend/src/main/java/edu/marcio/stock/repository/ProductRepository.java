@@ -28,7 +28,7 @@ public interface ProductRepository extends JpaRepository<Product, String> {
                         @Param("sku") String sku,
                         @Param("ean") String ean,
                         @Param("brandId") String brandId,
-                        @Param("isActive") boolean isActive);
+                        @Param("isActive") Boolean isActive);
 
         @Query("SELECT p FROM Product p " +
                         "WHERE p.brand.id = :id " +

@@ -8,5 +8,5 @@ public class SectorProductsListingParamsRequest {
     private String sku;
     private String ean;
     private String brand;
-    private boolean isActive;
+    private Boolean isActive;
 }

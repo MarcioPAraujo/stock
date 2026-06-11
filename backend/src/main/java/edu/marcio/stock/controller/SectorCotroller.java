@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,7 +50,9 @@ public class SectorCotroller {
     }
 
     @GetMapping("/{id}/products")
-    public ResponseEntity<Page<Product>> getSectorProducts(@PathVariable String id, Pageable pageable,
+    public ResponseEntity<Page<Product>> getSectorProducts(
+            @PathVariable String id,
+            @PageableDefault(size = 10, page = 0) Pageable pageable,
             @ModelAttribute SectorProductsListingParamsRequest params) {
         Page<Product> sectorProductsPage = sectorService.getSectorProductsPage(id, pageable, params);
 
