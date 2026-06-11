@@ -3,6 +3,7 @@ package edu.marcio.stock.service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import edu.marcio.stock.dto.supplier.SupplierRequest;
 import edu.marcio.stock.entity.Supplier;
@@ -15,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 public class SupplierService {
     private final SupplierRepository supplierRepository;
 
+    @Transactional
     public Supplier registSupplier(SupplierRequest request) {
         Supplier supplierToPersist = new Supplier();
 
@@ -29,6 +31,7 @@ public class SupplierService {
         return supplierRepository.findPageWithNameFilter(pageable, name);
     }
 
+    @Transactional
     public Supplier toggleSupplierStatus(String id) {
         Supplier supplier = supplierRepository
                 .findById(id)

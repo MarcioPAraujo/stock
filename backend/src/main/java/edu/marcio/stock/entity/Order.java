@@ -9,6 +9,8 @@ import org.hibernate.validator.constraints.Length;
 import edu.marcio.stock.enums.OrderStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -26,7 +28,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "order")
+@Table(name = "lot_order")
 public class Order {
 
     @Id
@@ -34,6 +36,7 @@ public class Order {
     private Long id;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
     @Column(nullable = false, name = "created_at")
@@ -46,7 +49,7 @@ public class Order {
     private LocalDateTime canceledAt;
 
     @Column(columnDefinition = "TEXT", length = 5000)
-    @Length(max = 5000, message = "the observation must not pass pver 5000 characters")
+    @Length(max = 5000, message = "the observation must not pass over 5000 characters")
     private String observations;
 
     @PrePersist
@@ -60,6 +63,6 @@ public class Order {
     private Supplier supplier;
 
     @ManyToMany
-    @JoinTable(name = "order_products", joinColumns = @JoinColumn(nullable = false, name = "order_id"), inverseJoinColumns = @JoinColumn(nullable = false, name = "product_id"))
-    private List<Product> products = new ArrayList<>();
+    @JoinTable(name = "order_lots", joinColumns = @JoinColumn(nullable = false, name = "order_id"), inverseJoinColumns = @JoinColumn(nullable = false, name = "lot_id"))
+    private List<Lot> lots = new ArrayList<>();
 }

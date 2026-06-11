@@ -36,7 +36,7 @@ public class SupplierController {
 
     @GetMapping("/list")
     public ResponseEntity<Page<Supplier>> getSupplierPage(@PageableDefault(size = 10, page = 0) Pageable pageable,
-            @RequestParam String name) {
+            @RequestParam(required = false) String name) {
         Page<Supplier> supplierPage = supplierService.getSupplierPage(pageable, name);
         return ResponseEntity.status(HttpStatus.OK).body(supplierPage);
     }

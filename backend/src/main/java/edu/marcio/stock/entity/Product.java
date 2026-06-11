@@ -58,13 +58,13 @@ public class Product {
     private boolean isActive;
 
     @Column(nullable = false)
-    private Long quantiy;
+    private Long totalStock;
 
     @PrePersist
     public void setActive() {
         this.isActive = true;
         this.sku = generateSKU();
-        this.quantiy = 0L;
+        this.totalStock = 0L;
     }
 
     @ManyToMany(fetch = FetchType.LAZY)

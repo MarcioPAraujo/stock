@@ -28,17 +28,20 @@ public class Lot {
     private Long id;
 
     @Column(nullable = false, name = "manufacturing_date")
-    private LocalDate manufacturingDate;
+    private LocalDateTime manufacturingDate;
 
     @Column(nullable = false, name = "expiry_date")
-    private LocalDate expiryDate;
+    private LocalDateTime expiryDate;
 
-    @Column(nullable = false, name = "received_at")
+    @Column(name = "received_at")
     private LocalDateTime receivedAt;
+
+    @Column(nullable = false)
+    private Long quantity;
 
     @PrePersist
     public void fillReceivedDate() {
-        this.receivedAt = LocalDateTime.now();
+        this.manufacturingDate = LocalDateTime.now();
     }
 
     @ManyToOne
